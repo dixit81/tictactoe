@@ -13,4 +13,4 @@ For IntelliJ users, do the following steps after cloning:
 3. Search for "Guava 28.1-jre"
 4. Inside the dropdown, select the library and add it to the project.
 
-Once this is done, You can run the main method in the Game.java class
+Once this is done, you can run the main method in the Game.java class
