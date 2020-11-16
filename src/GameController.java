@@ -136,9 +136,8 @@ public class GameController {
         // reset count to 0
         count = 0;
         for(int i=0; i<boardState.length; i++) {
-            for(int j = boardState[i].length - 1; j >= 0; j--)
-            count += (boardState[i][j].equals("X") ? 1 :
-                    boardState[i][j].equals("O") ? -1 : 0);
+            count += (boardState[i][2-i].equals("X") ? 1 :
+                    boardState[i][2-i].equals("O") ? -1 : 0);
             if (count == 3 || count == -3) {
                 return true;
             }
