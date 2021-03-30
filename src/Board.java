@@ -11,7 +11,10 @@ public class Board {
 
     public String[][] initialiseBoard() {
         IntStream.range(0, squares.length).forEach(i -> Arrays.fill(squares[i], "_"));
+        return squares;
+    }
 
+    public void printBoardState(final String[][] squares) {
         for (final String[] square : squares) {
             for (final String s : square) {
                 System.out.printf("| %s ", s);
@@ -20,9 +23,5 @@ public class Board {
             System.out.println(" ");
         }
 
-        return squares;
     }
-
-
-
 }
