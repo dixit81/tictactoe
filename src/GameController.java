@@ -1,6 +1,7 @@
 import com.google.common.collect.ImmutableList;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class GameController {
@@ -8,7 +9,7 @@ public class GameController {
     private final Board board;
 
     public GameController(final Board board) {
-        this.board = board;
+        this.board = Objects.requireNonNull(board, "board must not be null");
     }
 
     public boolean beginGame() {

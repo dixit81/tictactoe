@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Board {
@@ -6,7 +7,7 @@ public class Board {
     private final String[][] squares;
 
     public Board(final String[][] squares) {
-        this.squares = squares;
+        this.squares = Objects.requireNonNull(squares, "squares must not be null");
     }
 
     public String[][] initialiseBoard() {

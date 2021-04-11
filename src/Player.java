@@ -2,6 +2,9 @@ import com.google.common.collect.ImmutableMap;
 import javafx.util.Pair;
 
 import java.util.Map;
+import java.util.Objects;
+
+import static java.util.Objects.requireNonNull;
 
 public class Player {
 
@@ -20,7 +23,7 @@ public class Player {
             .build();
 
     public Player(final String playerChoice) {
-        this.playerChoice = playerChoice;
+        this.playerChoice = requireNonNull(playerChoice, "playerChoice must not be null");
     }
 
     public String[][] placeMarkerOnSquareChoice(final String[][] squares, final int square) {
