@@ -2,7 +2,6 @@ import com.google.common.collect.ImmutableMap;
 import javafx.util.Pair;
 
 import java.util.Map;
-import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
