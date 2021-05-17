@@ -7,14 +7,15 @@ import java.util.Scanner;
 public class GameController {
 
     private final Board board;
+    private final GameOverChecker gameOverChecker;
 
-    public GameController(final Board board) {
+    public GameController(final Board board,
+                          final GameOverChecker gameOverChecker) {
         this.board = Objects.requireNonNull(board, "board must not be null");
+        this.gameOverChecker = Objects.requireNonNull(gameOverChecker, "gameOverChecker must not be null");
     }
 
     public boolean beginGame() {
-
-        int boxChoice = 0;
         // Initialise board
         String[][] squares = board.initialiseBoard();
 
@@ -22,123 +23,17 @@ public class GameController {
         final List<Player> allPlayers = createPlayersBasedOnChoice();
 
         while (true) {
-            System.out.println("Player 1 - please choose your square. Enter your answer as a number from 1-9");
-            boxChoice = sanitiseChoice();
-            allPlayers.get(0).placeMarkerOnSquareChoice(squares, boxChoice);
-            board.printBoardState(squares);
+            for(int i=0; i<allPlayers.size(); i++) {
+                System.out.println("Player " + (i + 1) + " - please choose your square. Enter your answer as a number from 1-9");
+                allPlayers.get(i).placeMarkerOnSquareChoice(squares, sanitiseChoice());
+                board.printBoardState(squares);
 
-            if (gameOverChecker(squares)) {
-                System.out.println("Player 1 wins!");
-                return true;
-            }
-
-            System.out.println("Player 2 - please choose your square. Enter your answer as a number from 1-9");
-            boxChoice = sanitiseChoice();
-            allPlayers.get(1).placeMarkerOnSquareChoice(squares, boxChoice);
-            board.printBoardState(squares);
-
-            if (gameOverChecker(squares)) {
-                System.out.println("Player 2 wins!");
-                return true;
-            }
-        }
-
-    }
-
-    private boolean gameOverChecker(final String[][] squares) {
-
-        if (horizontalGameOverChecker(squares)) return true;
-        if (verticalGameOverChecker(squares)) return true;
-        if (leftRightDiagonalChecker(squares)) return true;
-        if (rightLeftDiagonalChecker(squares)) return true;
-
-        return false;
-    }
-
-    private boolean rightLeftDiagonalChecker(final String[][] squares) {
-        int countX = 0;
-        int countO = 0;
-
-        for (int i = 0, j = squares.length - 1; i < squares.length; i++, j--) {
-            if (squares[i][j].equals("X")) {
-                countX++;
-            } else if (squares[i][j].equals("O")) {
-                countO++;
-            }
-
-            if (countO == squares.length || countX == squares.length) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean leftRightDiagonalChecker(final String[][] squares) {
-        int countX = 0;
-        int countO = 0;
-
-        for (int i = 0, j = 0; i < squares.length; i++, j++) {
-            if (squares[i][j].equals("X")) {
-                countX++;
-            } else if (squares[i][j].equals("O")) {
-                countO++;
-            }
-        }
-
-        if (countO == squares.length || countX == squares.length) {
-            return true;
-        }
-
-        return false;
-
-    }
-
-    private boolean verticalGameOverChecker(final String[][] squares) {
-        int countX = 0;
-        int countO = 0;
-        for (int i = 0; i < squares.length; i++) {
-            for (int j = 0; j < squares.length; j++) {
-                if (squares[j][i].equals("X")) {
-                    countX++;
-                } else if (squares[j][i].equals("O")) {
-                    countO++;
+                if (gameOverChecker.checkAllPossibilities(squares)) {
+                    System.out.println("Game Over!");
+                    return true;
                 }
             }
-
-            if (countO == squares.length || countX == squares.length) {
-                return true;
-            }
-
-            countX = 0;
-            countO = 0;
         }
-
-        return false;
-    }
-
-    private boolean horizontalGameOverChecker(final String[][] squares) {
-        int countX = 0;
-        int countO = 0;
-
-        for (final String[] rowContent : squares) {
-            for (final String content : rowContent) {
-                if (content.equals("X")) {
-                    countX++;
-                } else if (content.equals("O")) {
-                    countO++;
-                }
-            }
-
-            if (countO == squares.length || countX == squares.length) {
-                return true;
-            }
-
-            countX = 0;
-            countO = 0;
-        }
-
-        return false;
     }
 
     private int sanitiseChoice() {
@@ -151,7 +46,6 @@ public class GameController {
         System.out.println("Got it!");
         return Integer.parseInt(boxNumber);
     }
-
 
     private List<Player> createPlayersBasedOnChoice() {
         System.out.println("Player 1 - Please enter X or O");
@@ -184,5 +78,4 @@ public class GameController {
         System.out.println("Got it!");
         return input;
     }
-
 }

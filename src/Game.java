@@ -5,7 +5,8 @@ public class Game {
         System.out.println("Welcome to Tic Tac Toe - basic version");
 
         final Board board = new Board(new String[3][3]);
-        final GameController gameController = new GameController(board);
+        final GameOverChecker gameOverChecker = new GameOverChecker();
+        final GameController gameController = new GameController(board, gameOverChecker);
         gameController.beginGame();
 
     }
